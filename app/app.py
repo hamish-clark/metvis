@@ -31,7 +31,7 @@ def generate_random_code():
     password = "".join(choice(allchar) for x in range(randint(0, code_length)))
     return password
 
-app = Flask("Amy")
+app = Flask("amy")
 app.debug = False
 app.secret_key = generate_random_code()
 CORS(app)
