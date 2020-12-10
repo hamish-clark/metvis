@@ -14,7 +14,7 @@ import geopy.distance
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from gtfs_to_json import load_gtfs_data
+from app.gtfs_to_json import load_gtfs_data
 
 from pymongo import MongoClient
 from bson.codec_options import CodecOptions
