@@ -24,7 +24,6 @@ from bson.json_util import JSONOptions
 import string
 from random import choice, randint
 
-config = {}
 
 def generate_random_code():
     code_length = 16
@@ -456,35 +455,35 @@ def reload():
     return jsonify({"result": "success"})
 
 
-if __name__ == "__main__":
-    try:
-        config = load_json('config.json')
-    except:
-        config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
+try:
+    config = load_json('config.json')
+except:
+    config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
+
+RUN_TYPE        = config["run_type"]
+SERVER_PATH     = config["server_path"]
+SERVER_PORT     = config["server_port"]
+MONGODB_PATH    = config["mongodb_url"]
+
+SERVER_PASSWORD = "1234"
+
+START_DATE = config["start_date"]
     
-    RUN_TYPE        = config["run_type"]
-    SERVER_PATH     = config["server_path"]
-    SERVER_PORT     = config["server_port"]
-    MONGODB_PATH    = config["mongodb_url"]
+mongodb_client = MongoClient('mongodb://' + MONGODB_PATH)
+db = mongodb_client['travis']
+options = CodecOptions(tz_aware=True, tzinfo=pytz.timezone('Pacific/Auckland'))
 
-    SERVER_PASSWORD = "1234"
+historical_collection = db.get_collection('historical', codec_options=options)
+trip_collection = db.get_collection('historical_trip', codec_options=options)
+snapper_collection = db.get_collection('snapper', codec_options=options)
 
-    START_DATE = config["start_date"]
+print("TrafficVis Prediction Service.")
 
-    mongodb_client = MongoClient('mongodb://' + MONGODB_PATH)
-    db = mongodb_client['travis']
-    options = CodecOptions(tz_aware=True, tzinfo=pytz.timezone('Pacific/Auckland'))
+metlink = BusService('app/metlink/', historical_collection, START_DATE)
 
-    historical_collection = db.get_collection('historical', codec_options=options)
-    trip_collection = db.get_collection('historical_trip', codec_options=options)
-    snapper_collection = db.get_collection('snapper', codec_options=options)
+# start_scheduler()
 
-    print("TrafficVis Prediction Service.")
-
-    metlink = BusService('app/metlink/', historical_collection, START_DATE)
-
-    # start_scheduler()
-
+if __name__ == "__main__":
     if RUN_TYPE == "deploy":
         socketio.run(app, '0.0.0.0', port=SERVER_PORT)
     else:
