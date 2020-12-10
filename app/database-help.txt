@@ -1,0 +1,42 @@
+mongoimport --db travis --collection historical --file hst.json
+mongoimport --db travis --collection historical_trip --file hst_trp.json
+mongoimport --db travis --collection snapper --file out.json
+
+
+//Development directory
+mongod --dbpath /am/st-james/home1/clarkhami2/489/engr489/app/data/db
+mongod --dbpath vol/projects/clarkhami2-489/data/db --port 56126
+
+ssh clarkhami2@greta-pt.ecs.vuw.ac.nz
+
+cd vol/projects/clarkhami2-489/engr489
+
+mongod -- 
+
+db.snapper.find(
+    {duty_date:"2019-03-10"},
+    {_id:1, duty_date:1}
+).count()
+
+db.snapper.aggregate([
+    {$match : {duty_date:"2019-03-25"}},
+
+    {$group : {
+        _id : {duty_date: "$duty_date"},
+        transactions : {$push : {
+            board_stop_id : "$board_stop_id",
+            alight_stop_id : "$alight_stop_id"
+        }}
+        }
+    }
+])
+
+db.snapper.aggregate([
+    {$group : {
+        _id : {duty_date: "$duty_date"},
+        total : {$sum:1}
+        }
+    }
+])
+
+db.snapper.distinct("route_code")

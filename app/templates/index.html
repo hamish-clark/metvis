@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+  <head>
+    <title> TrafficVis </title>
+
+    <!-- Poly fill for -->
+    <script type="text/javascript" src="../static/assets/polyfill.min.js"></script>
+
+    <script defer src="../static/assets/d3.min.js"> </script>
+
+    <!-- Flask template injection of json config file loaded from web-server-->
+    <script> var config = {{ config | safe }} </script>
+
+    <link rel="shortcut icon" href="/static/favicon.ico"> <!-- -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../static/layout.css" />
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+
+    <script defer src="../static/dataloader.js"> </script>
+    <script defer src="../static/index.js"> </script>
+
+    <script type="text/javascript" src="../static/assets/detect-element-resize.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/loading-view/loading-view.css" />
+    <script defer                           src="../static/loading-view/loading-view.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="../static/time-range-slider/time-range-slider.css" />
+    <script defer                           src="../static/time-range-slider/time-range-slider.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="../static/route-selector/route-selector.css" />
+    <script defer                           src="../static/route-selector/route-selector.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="../static/trip-selector/trip-selector.css" />
+    <link rel="stylesheet" type="text/css" href="../static/trip-selector/trip-tracker.css" />
+    <link rel="stylesheet" type="text/css" href="../static/trip-selector/trip-timetable.css" />
+    <script defer                           src="../static/trip-selector/tripController.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="../static/timetable/timetable.css" />  
+    <script defer                           src="../static/timetable/timetable.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="../static/moments-view/moments-view.css" />
+    <script defer                           src="../static/moments-view/moments-view.js"> </script>
+    
+    <!-- <link rel="stylesheet" type="text/css" href="../static/day-view/day-view.css" />  
+    <script defer                           src="../static/day-view/day-view.js"> </script> -->
+
+    <link rel="stylesheet" type="text/css" href="../static/map-view/map-view.css" />
+    <script defer src="../static/map-view/map-view.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="../static/toggle-btn/toggle-btn.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/switch-field/switch-field.css" />
+    <script defer src="../static/switch-field/switch-field.js"> </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    
+    
+    <script src="../static/assets/p5.min.js"></script>
+    <script src="../static/assets/p5.dom.min.js"></script>
+    <script defer src="../static/charts/graph.js"> </script>
+    <script defer src="../static/charts/lineGraphRange.js"> </script>
+    <script defer src="../static/charts/heatMap.js"> </script>
+    <script defer src="../static/charts/pieGraph.js"> </script>
+    <script defer src="../static/charts/reliabilityGraphQuantity.js"> </script>
+    <script defer src="../static/charts/reliabilityGraph.js"> </script>
+    <script defer src="../static/charts/spatialGraph.js"> </script>
+    <script defer src="../static/charts/predictability.js"> </script>
+    <script defer src="../static/charts/chartTest.js"> </script>
+    <script defer src="../static/charts/graphs.js"> </script> 
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYcQDoFUhAJRaxL3VP2baA8eOexcFNb4s&libraries=visualization&callback=initGoogleApi"> </script>
+
+    <style data="test" type="text/css"></style> <!-- sun glow styling object -->
+
+  </head>
+
+  <body>
+
+    <div id="outer">
+
+      <div class="loading_over">
+        <div id="loading_animation_container">
+            <div class="loading_animation"> </div>
+            
+        </div>
+        <p class="loading_animation_text"> Loading MetVis</p>
+        <div id="loading_output">
+        </div>
+      </div> <!--loading_over-->
+
+      <div id = "inner">
+
+        <div id="row1" class="--flex-row">
+
+          <div id="content">
+
+            <div id="chartContainer">
+              
+                <div id="side-menu" class="shadow">
+                    <button onclick="set_chart_tab(1)" class="side-menu--item"> Line Chart </button>
+                    <button onclick="set_chart_tab(2)" class="side-menu--item"> Variability Chart </button>
+                    <button onclick="set_chart_tab(3)" class="side-menu--item"> Median Chart </button>
+                    <button onclick="set_chart_tab(4)" class="side-menu--item"> Deviation Chart </button>
+                    <button onclick="set_chart_tab(5)" class="side-menu--item"> Trip Tracker </button>
+                    <button onclick="set_chart_tab(6)" class="side-menu--item"> Timetable </button>
+                    <button onclick="set_chart_tab(7)" class="side-menu--item"> Moments </button>              
+                    
+                    <p class="headingText_style" id="headingText"></p>
+                    
+                </div> <!--side-menu-->
+
+              <div id="chartDrawer" class="shadow"> <!--chartDrawer-->
+                <div class="tab">
+                  <div id ="chart1" class="chart"> </div>
+                </div>
+                <div class="tab">
+                  <div id ="chart2" class="chart"> </div>
+                </div>
+                <div class="tab">
+                  <div id ="chart3" class="chart"> </div>
+                </div>
+                <div class="tab">
+                  <div id ="chart4" class="chart"> </div>
+                </div>
+
+                <div class="tab">
+                  <div id="trip_tracker_container"> </div>
+                  
+                  <div id="day-view__container"></div>
+                
+                </div><!--tab-->
+
+                <div class="tab">
+                  <div id="timetable_table_container">
+                    <i class="material-icons button-fullscreen"> fullscreen </i>
+                  </div>
+                </div>
+                <div class="tab" id="moments_tab">
+                  <div id="moments__container">
+                    
+                    <div id="moments__overlay">
+                      <div class="pullout_right"> <i class="material-icons">  keyboard_arrow_left </i> </div>
+
+                      <div style="width: 200px; pointer-events: all;" class="shadow">
+
+                      <div class="control__row">
+                          <text> Show Trip Delay </text>
+                          <div class="toggle-btn" id="_1st-toggle-btn">
+                              <input type="checkbox" id="show_moments_delay_toggle" checked>
+                              <span></span>
+                          </div>
+                        </div>
+
+                        <div class="control__row">
+                          <text> Show Change in Delay </text>
+                          <div class="toggle-btn" id="_1st-toggle-btn">
+                              <input type="checkbox" id="show_delay_change_toggle">
+                              <span></span>
+                          </div>
+                        </div>
+
+                        <div class="control__row">
+                          <text> Show Snapper Trips </text>
+                          <div class="toggle-btn" id="_1st-toggle-btn">
+                            <input type="checkbox" id="show_snapper_trips_toggle">
+                            <span></span>
+                          </div>
+                        </div>
+
+                        <div class="control__row">
+                          <text> Show Bus Capacity </text>
+                          <div class="toggle-btn" id="_1st-toggle-btn">
+                            <input type="checkbox" id="show_bus_capacity_toggle">
+                            <span></span>
+                          </div>
+                        </div>
+
+<!-- 
+                        <div class="control__row">
+                          <text> Show Boarding Markers </text>
+                          <div class="toggle-btn" id="_1st-toggle-btn">
+                            <input type="checkbox" id="show_boarding_markers_toggle">
+                            <span></span>
+                          </div>
+                        </div> -->
+
+                      </div>
+                    </div>
+
+                    <div id="moments__map"></div>
+                    <div id="moments__trip-playback" style="display:none;">
+                        <i class="material-icons" style="margin-left: 20px;"> play_arrow </i>
+                        <h2> 00:00 </h2>
+                        <input type="range" min="1" max="10000" value="0" id="trip-playback__slider">
+
+                        <div id="playBack__slider"></div>
+                      </div>
+                  </div>
+                  <!-- d3 generates trip visualisations here -->
+                </div>
+              </div>
+
+              <div id="chartHeader" class="shadow">
+                  <div id="chartButtonHolder">
+                    <div class="chartButtons" id="chartButton0">
+                      <select class='input-style roundedTimeSelector'>
+                        <option value="3"> Show Raw Data </option>
+                        <option value="5"> 5 Minute Average </option>
+                        <option selected="selected" value="15"> 15 Minute Average </option>
+                        <option value="60"> Hourly Average </option>
+                      </select>
+                    </div>
+                    <div class="chartButtons" id="chartButton1">
+                      <select class='input-style roundedTimeSelector'>
+                        <option value="3"> Show Raw Data </option>
+                        <option value="5"> 5 Minute Average </option>
+                        <option selected="selected" value="15"> 15 Minute Average </option>
+                        <option value="60"> Hourly Average </option>
+                      </select>
+                    </div>
+                    <div class="chartButtons" id="chartButton2">
+                      <select class='input-style roundedTimeSelector'>
+                        <option value="3"> Show Raw Data </option>
+                        <option value="5"> 5 Minute Average </option>
+                        <option selected="selected" value="15"> 15 Minute Average </option>
+                        <option value="60"> Hourly Average </option>
+                      </select>
+                    </div>
+                    <div class="chartButtons" id="chartButton3">
+                      <select class='input-style roundedTimeSelector'>
+                        <option value="3"> Show Raw Data </option>
+                        <option value="5"> 5 Minute Average </option>
+                        <option selected="selected" value="15"> 15 Minute Average </option>
+                        <option value="60"> Hourly Average </option>
+                      </select>
+                    </div>
+                    <div  class="chartButtons" id="chartButton7">
+    
+                    </div>
+                    <div class="chartButtons" id="chartButton8">
+    
+                      <div id="timetable-stop-switch" class="switch-field">
+                        <input id ="timetable-stop-switch__left" type="radio" name="timetable-stop-switch" value="major"/>
+                        <label for="timetable-stop-switch__left"> Major </label>
+                        <input id ="timetable-stop-switch__right"type="radio" name="timetable-stop-switch" value="all" checked/>
+                        <label for="timetable-stop-switch__right"> All </label>
+                      </div>
+    
+                      <div class="control__row">
+                        <text> Delay Colours </text>
+                        <div class="toggle-btn" id="_1st-toggle-btn">
+                            <input type="checkbox" id="colour_delays_toggle">
+                            <span></span>
+                        </div>
+                      </div>
+
+                      <div class="control__row">
+                        <text> Reliability Colours </text>
+                        <div class="toggle-btn" id="_1st-toggle-btn">
+                            <input type="checkbox" id="colour_reliability_toggle">
+                            <span></span>
+                        </div>
+                      </div>
+    
+                      <div id="timetable-direction-switch" class="switch-field">
+                        <input id ="timetable-direction-switch__left" type="radio" name="timetable-direction-switch" value="inbound" checked/>
+                        <label for="timetable-direction-switch__left"> Inbound </label>
+                        <input id ="timetable-direction-switch__right"type="radio" name="timetable-direction-switch" value="outbound"/>
+                        <label for="timetable-direction-switch__right"> Outbound </label>
+                      </div>
+    
+                      <div id="timetable-aggregate-switch" class="switch-field">
+                        <input id ="timetable-aggregate-switch__left" type="radio" name="timetable-aggregate-switch" value="current"/>
+                        <label for="timetable-aggregate-switch__left"> Current </label>
+                        <input id ="timetable-aggregate-switch__center"type="radio" name="timetable-aggregate-switch" value="average" checked/>
+                        <label for="timetable-aggregate-switch__center"> Mean </label>
+                        <input id ="timetable-aggregate-switch__right"type="radio" name="timetable-aggregate-switch" value="median"/>
+                        <label for="timetable-aggregate-switch__right"> Median </label>
+                      </div>
+    
+                    </div>
+    
+                    <div class="chartButtons" id="chartButton9">
+                    </div>
+    
+                  </div>
+              </div> <!--chartHeader-->
+    
+            </div> <!--chartContainer-->
+          </div> <!--content-->
+
+          <div id = "live-map">
+
+            <div id="live-map__inner" class="shadow">
+              <div id="live-map__over">
+
+                <div id ="live-map__control">
+                  
+                  <div id = "live-map__control__container" class="shadow">
+                    <p class="help-label"> Live Map Controls </p>
+                    <div class="control__row">
+                      <text> Show Live Buses </text>
+                      <div class="toggle-btn" id="_1st-toggle-btn">
+                          <input type="checkbox" id="live_bus_toggle" checked>
+                          <span></span>
+                      </div>
+                    </div>
+
+                    <div class="control__row">
+                      <text> Show Route Lines</text>
+                      <div class="toggle-btn" id="_1st-toggle-btn">
+                          <input type="checkbox" id="route_lines_toggle" checked>
+                          <span></span>
+                      </div>
+                    </div>
+
+                    <div class="control__row">
+                      <text> Show Stop Markers </text>
+                      <div class="toggle-btn" id="_1st-toggle-btn">
+                          <input type="checkbox" id="stop_markers_toggle">
+                          <span></span>
+                      </div>
+                  </div>
+                    
+                  
+                    <div class="switch-field">
+                        <input type="radio" id="switch_3_left" class="switch_3" name="switch_3" value="inbound" checked/>
+                        <label for="switch_3_left">Inbnd</label>
+                        <input type="radio" id="switch_3_center" class="switch_3" name="switch_3" value="outbound" />
+                        <label for="switch_3_center">Outbnd</label>
+                        <input type="radio" id="switch_3_right" class="switch_3" name="switch_3" value="both"/>
+                        <label for="switch_3_right">Both</label>
+                      </div>
+                  </div>
+
+                  <div id="control" class="shadow">
+                      <p class ="help-label"> Aggregate Controls </p>
+                      <p id="date-text"> </p>
+
+                      <div class="switch-field">
+                          <input type="radio" id="aggregate_mode_left" class="aggregate_mode" name="aggregate_mode" value="current" checked/>
+                          <label for="aggregate_mode_left"> Current </label>
+                          <input type="radio" id="aggregate_mode_center" class="aggregate_mode" name="aggregate_mode" value="average" />
+                          <label for="aggregate_mode_center"> Mean </label>
+                          <input type="radio" id="aggregate_mode_right" class="aggregate_mode" name="aggregate_mode" value="median"/>
+                          <label for="aggregate_mode_right"> Median </label>
+                      </div>  
+
+                      <select id="daySelector" class='input-style' style="width:100%">
+                        <option value="-5"> Current Day </option>
+                        <option value="-1"> Everyday </option>
+                        <option value="-2"> Weekdays </option>
+                        <option value="-3"> Weekends </option>
+                        <option value="1"> Mondays </option>
+                        <option value="2"> Tuesdays </option>
+                        <option value="3"> Wednesdays </option>
+                        <option value="4"> Thursdays </option>
+                        <option value="5"> Fridays </option>
+                        <option value="6"> Saturdays </option>
+                        <option value="0"> Sundays </option>
+                      </select>
+
+
+
+                      <select id='citySelector' class='input-style' style="display:none">
+                        <option id="wellingtonButton" value="wellington"> Wellington </option>
+                        <option id="christchurchButton"value="christchurch"> Christchurch </option>
+                        <option id="aucklandButton" value="auckland"> Auckland </option>
+                      </select>
+    
+                      
+   
+                  </div> <!--control--> 
+
+                  <div id="trip-selector">
+                      <div id="trip-selector__controller" class="shadow">
+
+                          <div class="control__row">
+                            <text> Show Active Trips </text>
+                            <div class="toggle-btn" id="_1st-toggle-btn">
+                                <input type="checkbox" id="active_trips_toggle" checked>
+                                <span></span>
+                            </div>
+                          </div>
+
+                      </div> <!--trip-selector__controller-->
+
+                    <div id="trip-selector__container"> 
+                        <p class ="help-label"> Trip Selector </p>
+                    </div> <!--trip-selector__container-->
+
+                  </div> <!--trip-selector-->
+                </div>
+
+                <div id = "live-map__filter">
+                    <div class="route-selector" id="route-selector" style="pointer-events: all">
+                        <p class="help-label" style="z-index: 1; position: absolute; top: -20px; left: 0; color: #797979;"> Route Selector </p>
+                      <span id="selectAllRoutesButton" onclick="route_selector_clicked('all')" class="selector special_select" style="opacity: 1; color:white; background:black;"> All </span>
+                      <!-- <span id="selectAllRoutesButton" class="selector special_select" style="opacity: 0.3; color:white; background:black;"> All </span> -->
+                      <span id="deselectAllRoutesButton" onclick="route_selector_clicked('none')" class="selector special_select" style="text-shadow: none; color:black; background:white;"> Clear </span>
+                    </div> <!--route-selector-->
+                </div>
+
+                <div id = "live-map__right">
+            
+                </div>
+              
+              </div> <!--live-map__control-->
+
+              <div id ="live-map__collapser"> </div>
+              <div id="live-map__map" style = 'height: 100%;'> </div>
+
+            </div> <!--live-map__inner-->
+
+            <div class="time-range-container shadow">
+                <p class="help-label" style="z-index: 1; position: absolute; top: 2px; left: 2px; color: white; text-decoration: underline white"> Time Controller </p>
+                <div id = "controlWidget">
+                  <div class="centered_row" style = "margin-bottom: 8px;">
+                    <i id="playButton" onclick="playBack()" class="material-icons playbackButton"> play_arrow </i>
+                    <i onclick="stepBack()" class="material-icons playbackButton"> arrow_left </i>
+                    <h2 id='timeText' class="time-slider__time"> 09:00 </h2>
+                    <i onclick="stepForward()" class="material-icons playbackButton"> arrow_right </i>
+                  </div>    
+                  <div class="centered_row">
+                      <i onclick="previousDay()" class="material-icons" style="color:white; transform: translate(30px, 0px);"> arrow_left </i>
+                      <input id="dateSelector" type="date">
+                      <i onclick="nextDay()" class="material-icons" style="color:white; transform: translate(-40px, 0px);"> arrow_right </i>
+                  </div>
+                </div>
+                <input type="range" min="500" max="2200" value="1200" step="5" id="timeSlider" class="slider" id="myRange"
+                oninput="slide(this.value)" onchange="slide(this.value)">
+            </div> <!--time-range-container-->
+
+          </div> <!-- live-Map-->
+
+        </div> <!--row1-->
+
+        <div id="row2" class="--flex-row">
+
+        </div> <!--row2-->
+
+        <div id="row3" class="--flex-row">
+
+        </div> <!--row3-->
+
+      </div> <!--inner-->
+
+    </div> <!--outer-->
+
+  </body>
+
+</html>

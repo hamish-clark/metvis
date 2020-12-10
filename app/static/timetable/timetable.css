@@ -1,0 +1,134 @@
+
+#timetable_table_container {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 20px;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+table, th, tr, td{
+
+}
+
+h3{
+  margin: 0;
+  padding: 0;
+}
+
+#timetable__info-header{
+  width: 100%;
+  border-bottom: rgba(0,0,0,0.2);
+}
+
+#timetable__table-outer{
+  flex: 1;
+  overflow: scroll;
+  background: #e4e4e4;
+}
+
+#timetable__route-header{
+  /* text-shadow: -1px 2px black, 2px -1px black, 2px 2px black, -1px -1px black; */
+  font-size: 2em;
+  color: black !important;
+}
+
+#timetable__name-header{
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+#timetable__direction-header{
+
+}
+#timetable__daterange-header{
+
+}
+#timetable__aggregate-header{
+
+}
+
+table {
+  border-spacing: 1px;
+  border-collapse: collapse;
+}
+
+.table-resize{
+  width: 100%;
+}
+
+.tr-resize{
+  width: 100%;
+}
+
+.tr-resize:nth-child(odd){
+  background: white;
+  border-left: 2px solid #0c0c0c17;
+  border-right: 2px solid #0c0c0c17;
+}
+
+.td-time {
+    text-align: center;
+    margin: 0;
+    border-top: 2px solid #0c0c0c17;
+    border-bottom: 2px solid #0c0c0c17;
+    border-right: 2px solid #efefef;
+}
+
+.td-time--hover{
+  background: #cbdff1 !important;
+}
+
+.td-time:hover{
+  background: #aceae0 !important;
+}
+
+.td-time__text{
+  margin: 0;
+  padding: 5px;
+}
+
+table.floatThead-table {
+    border-top: none;
+    border-bottom: none;
+}
+
+th {
+  position: sticky;
+  top: 0px;
+}
+
+.sticky_header {
+    position: sticky;
+    right: 0;
+    top: 0px;
+    margin-top: -200px;
+    left: 0;
+    height: 200px;
+    background: #efefefe8;
+    box-shadow: 0px 0px 6px rgba(0,0,0,0.3)
+}
+
+
+.rotate {
+  /* Something you can count on */
+  height: 200px;
+  white-space: nowrap;
+}
+
+.rotate__div {
+  transform:
+    /* Magic Numbers */
+    translate(30px, 80px)
+    /* 45 is really 360 - 45 */
+    rotate(315deg);
+
+  width: 30px;
+}
+
+.rotate__div__span {
+  color: black ;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+}

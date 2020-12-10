@@ -1,0 +1,102 @@
+
+#trip-selector{
+  pointer-events: all;
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 200px;
+  order: 2;
+  flex: 1;
+  justify-content: space-between;
+  overflow-y: overlay;
+}
+
+#trip-selector__controller {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#trip-selector__container {
+  margin: 5px;
+  position: relative;
+  overflow-y: hidden;
+  flex: 1;
+  overflow-y: overlay;
+}
+
+.empty{
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: rgba(51, 51, 51, 0.5); /*#333*/
+  font-size: 16px;
+  text-align: center;
+}
+
+.widgetDrawer{
+  display: flex;
+  flex-direction: column;
+}
+
+.tripRouteContainer{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tripRouteHeader{
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 2px 20px;
+  display: inherit;
+  width: 100%;
+  color: #333;
+  margin: 5px 0px;
+}
+
+.tripContainer{
+  border-top: 1px solid rgb(211,211,211);
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 30px;
+  background: white;
+  /*background: rgba(255,255,255, 0.7);*/
+  border-radius: 15px;
+  white-space: nowrap;
+  margin: 1px 0px;
+}
+
+.tripContainer:last-child{
+  margin-bottom: 4px;
+}
+
+.tripDateContainer{
+  display: inherit;
+  height: 100%;
+  display: flex; align-items: center;
+  background: #f2f2f2;
+  border-radius: 15px 0% 0% 15px;
+  padding: 0px 5px;
+}
+
+.tripNameContainer{
+  display: inherit;
+  flex: 1;
+  height: 100%;
+  display: flex; align-items: center;
+  margin: 0px 5px;
+  /*border-right: 1px solid rgb(211,211,211);*/
+  overflow: hidden;
+}
+
+.tripTrackButton{
+  display: inherit;
+  width: 20px;
+  height: 100%;
+}
+
+.tripContainer:nth-child(odd){
+
+}
+.tripContainer:hover{
+  background: #f7f7f7;
+}

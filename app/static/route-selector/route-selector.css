@@ -1,0 +1,37 @@
+
+.route-selector{
+  position: relative;
+  /*background: var(--selector-bg-color);
+  border: 5px solid #efefef;*/
+  position: relative;
+  order: 1;
+  margin: 10px;
+  /* overflow-y: scroll; */
+  display: flex;
+  align-items: stretch;
+  align-content: flex-start;
+  flex-flow: row wrap;
+  max-height: 240px;
+}
+
+.special_select{
+  box-shadow: none !important;
+}
+
+.selector{
+  font-weight: 1000;
+  display: flex; align-items: center; justify-content: center;
+  width: 40px;
+  margin: 2px; color: white; border-radius: 4px;
+  height: 30px;
+  border-radius: 6px;
+  text-shadow: 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+  color: rgba(255,255,255,0.9);
+  box-shadow: inset 50px 50px 0px #eeeeee;
+  border: 2px solid rgb(191, 191, 191);
+}
+
+.selected{
+  box-shadow: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}

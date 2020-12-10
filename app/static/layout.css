@@ -1,0 +1,174 @@
+:root {
+  --margin-size: 10px;
+}
+
+
+.--flex-row{
+  display: flex;
+  flex-direction: row
+}
+
+.--flex-column{
+  flex-direction: column
+}
+
+#outer{
+  height: 100%;
+}
+
+#inner{
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+  background: var(--page-bg-color);
+  z-index: 1;
+}
+
+
+.hidden{
+  display: none !important;
+}
+
+#row1{
+  order: 1;
+  flex: 1
+}
+
+
+#row2{
+  order: 2;
+}
+
+
+#row3{
+  order: 3;
+}
+
+
+#side-menu {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  transition-duration: 0.2s;
+  margin-bottom: 0px !important;
+  min-height: 50px;
+}
+
+#side-menu-button{
+  position: fixed;
+  background: #ff634744;
+  border-radius: 0px 20px 20px 0px;
+  width: 40px;
+  height: 40px;
+  z-index: 30000;
+  top: calc(50% - 20px);
+}
+
+.info-box{
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+.side-menu--item{
+  height: 40px;
+  overflow: hidden;
+  color: #333;  
+  border: none;
+  outline: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  margin: 2px;
+}
+
+#content{
+  min-width: 500px;
+  margin-right: 5px; 
+  padding-right: 5px;
+  flex: 4;
+  order: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+#live-map{
+  order: 1;
+  flex: 3;
+  display: none;
+  flex-direction: column;
+}
+
+#control{
+  z-index: 10;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.control__row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+text {
+    margin-left: 6px;
+    border-bottom: 1px solid #ccc;
+}
+
+#visOptions{
+  width: 50%;
+}
+
+#chart0{
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+#dataOptions{
+  width: 50%;
+}
+
+
+#selectDay{
+  background: #333;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+
+#selectTime{
+  height: 30%;
+}
+
+#selectRoute{
+  height: 30%;
+}
+
+.error-message {
+    position: absolute;
+    display: table-cell;
+    text-align: center;
+    top: 0; bottom: 0; left: 0; right: 0;
+    font-size: 22px;
+    font-weight: 1000;
+    color: rgba(0,0,0,0.3);
+
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.3);
+}

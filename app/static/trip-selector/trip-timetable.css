@@ -1,0 +1,83 @@
+
+#timetable_container{
+  flex: 1;
+  order: 2;
+  height: 100%;
+  overflow-y: scroll;
+  margin: 0px 10px;
+  position: relative;
+}
+
+.timetable{
+  float:left;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+}
+
+.timetable__header-bg{
+
+}
+
+.timetable_header{
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.timetable_stop_drawer{
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  background: white;
+  flex-flow: column nowrap;
+}
+
+.timetable_stop{
+  border-top: 1px solid rgb(211,211,211);
+  display: flex;
+  flex-direction: row nowrap;
+  width: 100%;
+  min-height: 20px;
+  background: white;
+}
+
+.timetable_stop_time{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+  width: 50px;
+}
+
+.timetable_stop_name{
+  display: inherit;
+  flex: 1;
+  height: 100%;
+  display: flex; align-items: center;
+  padding: 0px 5px;
+  /*border-right: 1px solid rgb(211,211,211);*/
+  overflow: hidden;
+}
+
+.timetable_stop_delay{
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.late{
+  color: black;
+}
+
+.early{
+  color: rgb(51, 8, 0);
+}
+
+.timetable_stop:hover{
+  background: #f7f7f7;
+}

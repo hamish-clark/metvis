@@ -1,0 +1,70 @@
+
+.live-map--minimised{
+    flex: 300px !important;
+}
+
+#live-map__inner{
+  position: relative;
+  flex: 1;
+}
+
+#live-map__inner--fullscreen{
+  position: fixed;
+  top:0;bottom:0;right:0;left:0;
+  z-index: 10000;
+}
+
+
+
+#live-map__over{
+  z-index: 1001;
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0px; right: 0;
+  pointer-events: none;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#live-map__collapser{
+  z-index: 1000;
+  position: absolute;
+  width: 30px;
+  right: 0;
+  top: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+#live-map__control{
+  pointer-events: all;
+  padding: 5px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: space-between;
+  justify-content: flex-start;
+}
+
+#live-map__filter{
+  justify-content: end;
+  flex-flow: column-reverse;
+  display: flex
+}
+
+#live-map__right{
+  width: 100px;
+  justify-content: end;
+  flex-flow: column;
+  display: flex
+}
+
+@keyframes glow {
+  0%   {background: rgba(255, 255, 255, 0.6)}
+  50%  {background: rgba(255, 255, 255, 0.4)}
+  100%   {background: rgba(255, 255, 255, 0.6)}
+}
+
+#live-map__collapser:hover{
+  animation: glow 1s infinite;
+}
+

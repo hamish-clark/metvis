@@ -1,0 +1,58 @@
+@keyframes sky {
+    0%{background-position:0% 0%}
+    50%{background-position:50% 50%}
+    100%{background-position:0% 100%}
+  }
+
+.time-range-container{
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  max-height: 100px;
+  background: var(--header-bg-color);
+}
+
+.time-slider__time{
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.1em;
+  margin: 0;
+  border-radius: 4px;
+}
+
+/* The slider itself */
+.slider {
+  margin: 0;
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 100%;
+  border: none; outline: none;
+  background: none;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 40px; /* Set a specific slider handle width */
+    height: 40px; /* Slider handle height */
+    border-radius: 20px;
+    background:  #FCFFF9; /*linear-gradient(to right, rgb(247, 216, 165), rgb(44, 42, 130));*/
+    cursor: pointer; /* Cursor on hover */
+    /*
+    -800px 0px 0px -2px rgb(44, 42, 130),
+    -800px 0px rgba(216, 211, 255, 0.8)
+    box-shadow: 0px 0px 30px 7px #FFF4B5,
+                0px 0px 200px 100px #beAD86,
+                0px 0px 700px 400px rgb(96, 178, 255);
+    */
+    animation: moon 1s infinite;
+}
+
+.slidecontainer:hover > .slider::-webkit-slider-thumb{
+
+}
