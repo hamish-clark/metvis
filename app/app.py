@@ -31,7 +31,7 @@ def generate_random_code():
     password = "".join(choice(allchar) for x in range(randint(0, code_length)))
     return password
 
-app = Flask("amy")
+app = Flask("amy", template_folder='app/templates', static_folder='app/static')
 app.debug = False
 app.secret_key = generate_random_code()
 CORS(app)
@@ -439,7 +439,7 @@ def login():
     elif 'code' in session and session['code']==SERVER_PASSWORD:
         return redirect(url_for("index"))
     else:
-        return render_template('login.html')
+        return render_template('app/login.html')
 
 
 @app.route("/conf", methods=['GET'])
@@ -456,7 +456,10 @@ def reload():
 
 
 if __name__ == "__main__":
-    config = load_json('config.json')
+    try:
+        config = load_json('config.json')
+    except:
+        config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
     
     RUN_TYPE        = config["run_type"]
     SERVER_PATH     = config["server_path"]
@@ -477,7 +480,7 @@ if __name__ == "__main__":
 
     print("TrafficVis Prediction Service.")
 
-    metlink = BusService('metlink/', historical_collection, START_DATE)
+    metlink = BusService('app/metlink/', historical_collection, START_DATE)
 
     # start_scheduler()
 

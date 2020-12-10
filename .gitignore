@@ -18,3 +18,5 @@ app/metlink/ptbis_passenger_boardings_20190301_to_20190331.zip
 database/data/
 
 app/metro/
+
+.env

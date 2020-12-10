@@ -9,6 +9,11 @@ geopy = "*"
 flask-socketio = "*"
 flask-cors = "*"
 flask = "*"
+pymongo = "*"
+pytz = "*"
+apscheduler = "*"
+pandas = "*"
+partridge = "*"
 
 [dev-packages]
 
