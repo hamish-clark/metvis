@@ -24,6 +24,7 @@ from bson.json_util import JSONOptions
 import string
 from random import choice, randint
 
+config = {}
 
 def generate_random_code():
     code_length = 16
