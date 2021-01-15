@@ -455,7 +455,7 @@ def reload():
     return jsonify({"result": "success"})
 
 
-RUN_TYPE = "development"
+RUN_TYPE = "deploy"
 
 if RUN_TYPE == "deploy":
     config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
