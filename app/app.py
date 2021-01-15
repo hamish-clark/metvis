@@ -14,7 +14,7 @@ import geopy.distance
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from app.gtfs_to_json import load_gtfs_data
+from gtfs_to_json import load_gtfs_data
 
 from pymongo import MongoClient
 from bson.codec_options import CodecOptions
@@ -455,21 +455,24 @@ def reload():
     return jsonify({"result": "success"})
 
 
-try:
-    config = load_json('config.json')
-except:
-    config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
+RUN_TYPE = "deploy"
 
-RUN_TYPE        = config["run_type"]
-SERVER_PATH     = config["server_path"]
+if RUN_TYPE == "deploy":
+    config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
+else:
+    config = load_json('./app/config.json')
+
+
+SERVER_PATH     = config["server_path"] 
 SERVER_PORT     = config["server_port"]
 MONGODB_PATH    = config["mongodb_url"]
 
 SERVER_PASSWORD = "1234"
 
-START_DATE = config["start_date"]
+START_DATE = config["start_date"] or "2019-07-10"
     
 mongodb_client = MongoClient('mongodb://' + MONGODB_PATH)
+
 db = mongodb_client['travis']
 options = CodecOptions(tz_aware=True, tzinfo=pytz.timezone('Pacific/Auckland'))
 
