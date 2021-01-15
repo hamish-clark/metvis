@@ -31,7 +31,7 @@ def generate_random_code():
     password = "".join(choice(allchar) for x in range(randint(0, code_length)))
     return password
 
-app = Flask("amy", template_folder='app/templates', static_folder='app/static')
+app = Flask("amy", template_folder='templates', static_folder='static')
 app.debug = False
 app.secret_key = generate_random_code()
 CORS(app)
@@ -439,7 +439,7 @@ def login():
     elif 'code' in session and session['code']==SERVER_PASSWORD:
         return redirect(url_for("index"))
     else:
-        return render_template('app/login.html')
+        return render_template('login.html')
 
 
 @app.route("/conf", methods=['GET'])
@@ -455,12 +455,12 @@ def reload():
     return jsonify({"result": "success"})
 
 
-RUN_TYPE = "deploy"
+RUN_TYPE = "development"
 
 if RUN_TYPE == "deploy":
     config = { key : os.getenv(key) for key in ['run_type', 'server_path', 'server_port', 'mongodb_url', 'start_date'] }
 else:
-    config = load_json('./app/config.json')
+    config = load_json('./config.json')
 
 
 SERVER_PATH     = config["server_path"] 
@@ -482,7 +482,7 @@ snapper_collection = db.get_collection('snapper', codec_options=options)
 
 print("TrafficVis Prediction Service.")
 
-metlink = BusService('app/metlink/', historical_collection, START_DATE)
+metlink = BusService('./metlink/', historical_collection, START_DATE)
 
 # start_scheduler()
 

@@ -1,22 +1,22 @@
-app/metlink/historical
-app/metlink/new
-app/auckland_transport/
-app/metro/historical
-app/auckland_transport/sql_data
-app/metlink/ptbis_passenger_boardings_20190301_to_20190331.csv
-app/data/db
-app/out.json
-app/hst.json
-app/hst_trp.json
+metlink/historical
+metlink/new
+auckland_transport/
+metro/historical
+auckland_transport/sql_data
+metlink/ptbis_passenger_boardings_20190301_to_20190331.csv
+data/db
+out.json
+hst.json
+hst_trp.json
 
-app/static/data/GTFS_DATA.js
-app/static/data/HISTORICAL_DATA.js
-app/config.json
-app/__pychache__
-app/metlink/ptbis_passenger_boardings_20190301_to_20190331.zip
+static/data/GTFS_DATA.js
+static/data/HISTORICAL_DATA.js
+config.json
+__pychache__
+metlink/ptbis_passenger_boardings_20190301_to_20190331.zip
 
 database/data/
 
-app/metro/
+metro/
 
 .env
